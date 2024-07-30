@@ -4,7 +4,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ThumbsDown, ThumbsUp, Trash2 } from "lucide-react";
 import * as React from "react";
 
-export function Film({ category, dislikes, likes, title, id }: Movie) {
+export function Film({
+  category,
+  dislikes,
+  likes,
+  title,
+  id,
+  page,
+  itemsPerPage,
+}: Movie & {
+  page: number;
+  itemsPerPage: number;
+}) {
   const [isLiked, setIsLiked] = React.useState(true);
   const queryClient = useQueryClient();
   const dislikes_percent = (dislikes / (dislikes + likes)) * 100;
@@ -12,20 +23,23 @@ export function Film({ category, dislikes, likes, title, id }: Movie) {
 
   const mutation = useMutation({
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: moviesOptions(1).queryKey });
-      const previous = queryClient.getQueryData(moviesOptions(1).queryKey);
+      await queryClient.cancelQueries({ queryKey: moviesOptions(page, itemsPerPage).queryKey });
+      const previous = queryClient.getQueryData(moviesOptions(page, itemsPerPage).queryKey);
       if (previous === undefined) {
         throw new Error("Cache is empty");
       }
-      const newTodo = previous.filter((d) => d.id !== data);
-      queryClient.setQueryData(moviesOptions(1).queryKey, () => [...newTodo]);
+      const newTodo = previous.paginatedData.filter((d) => d.id !== data);
+      queryClient.setQueryData(moviesOptions(page, itemsPerPage).queryKey, {
+        ...previous,
+        paginatedData: newTodo,
+      });
     },
     mutationFn: async (id: string) => {
-      const res = queryClient.getQueryData(moviesOptions(1).queryKey);
+      const res = queryClient.getQueryData(moviesOptions(page, itemsPerPage).queryKey);
       if (res === undefined) {
         throw new Error("Cache is empty");
       }
-      return res.filter((d) => d.id !== id);
+      return res.paginatedData.filter((d) => d.id !== id);
     },
   });
 
@@ -67,12 +81,12 @@ export function Film({ category, dislikes, likes, title, id }: Movie) {
         <div className="mt-3 flex items-center justify-center">
           <span
             style={{
-              ["--dislikes" as any]: `${dislikes_percent}px`,
+              ["--dislikes" as string]: `${dislikes_percent}px`,
             }}
             className={`inline-block h-1 w-[var(--dislikes)] bg-red-700`}></span>
           <span
             style={{
-              ["--likes" as any]: `${likes_percent}px`,
+              ["--likes" as string]: `${likes_percent}px`,
             }}
             className={`inline-block h-1 w-[var(--likes)] bg-green-700`}></span>
         </div>

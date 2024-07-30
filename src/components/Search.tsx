@@ -1,15 +1,22 @@
 import { useMoviesCategories } from "#src/features/movies/queries";
 
-export function Search({ page }: { page: number }) {
-  const { data } = useMoviesCategories(page);
+type SearchProps = {
+  page: number;
+  itemsPerPage: number;
+  setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export function Search({ page, itemsPerPage, setItemsPerPage }: SearchProps) {
+  const { data } = useMoviesCategories(page, itemsPerPage);
 
   return (
     <>
-      <div className="flex flex-wrap">
-        <form id="filters">
+      <form id="filters">
+        <div className="flex flex-wrap gap-5">
           <div className="flex flex-col gap-3">
             <label htmlFor="category-select">Filtrer par catégorie</label>
             <select className="rounded-lg border-gray-300 text-sm text-gray-900" id="category-select" name="category">
+              <option value="all">Choisir une catégorie</option>
               {data &&
                 data.map((d) => (
                   <option key={d} value={d}>
@@ -18,8 +25,21 @@ export function Search({ page }: { page: number }) {
                 ))}
             </select>
           </div>
-        </form>
-      </div>
+          <div className="flex flex-col gap-3">
+            <label htmlFor="limit-select">Nombre de film par page</label>
+            <select
+              defaultValue={itemsPerPage}
+              onChange={(e) => setItemsPerPage(Number(e.target.value))}
+              className="rounded-lg border-gray-300 text-sm text-gray-900"
+              id="limit-select"
+              name="limit">
+              <option value={4}>4</option>
+              <option value={8}>8</option>
+              <option value={12}>12</option>
+            </select>
+          </div>
+        </div>
+      </form>
     </>
   );
 }
