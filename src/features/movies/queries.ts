@@ -17,11 +17,11 @@ const useMoviesQuery = <T = Movies>(select?: (data: Movies) => T, page?: number)
 
 export const useMovies = (page: number) => useMoviesQuery(undefined, page);
 
-export const useMoviesCategories = () =>
+export const useMoviesCategories = (page: number) =>
   useMoviesQuery((data) => {
     const unique = new Set(getCategoryFromMovies(data));
     return [...unique];
-  });
+  }, page);
 
 function getCategoryFromMovies(movies: Movies) {
   return movies.map((d) => d.category);

@@ -1,7 +1,7 @@
 import { useMoviesCategories } from "#src/features/movies/queries";
 
-export function Search() {
-  const { data } = useMoviesCategories();
+export function Search({ page }: { page: number }) {
+  const { data } = useMoviesCategories(page);
 
   return (
     <>
