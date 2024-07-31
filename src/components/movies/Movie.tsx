@@ -4,6 +4,31 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ThumbsDown, ThumbsUp, Trash2 } from "lucide-react";
 import * as React from "react";
 
+type State = {
+  like: boolean;
+  dislike: boolean;
+};
+
+type Action = {
+  type: "like" | "dislike";
+};
+
+function reducer(state: State, action: Action) {
+  if (action.type === "like") {
+    return {
+      like: !state.like,
+      dislike: false,
+    };
+  }
+  if (action.type === "dislike") {
+    return {
+      dislike: !state.dislike,
+      like: false,
+    };
+  }
+  throw Error("Unknown action.");
+}
+
 export function Film({
   category,
   dislikes,
@@ -16,7 +41,10 @@ export function Film({
   page: number;
   itemsPerPage: number;
 }) {
-  const [isLiked, setIsLiked] = React.useState(true);
+  const [state, dispatch] = React.useReducer(reducer, {
+    like: false,
+    dislike: false,
+  });
   const queryClient = useQueryClient();
   const dislikes_percent = (dislikes / (dislikes + likes)) * 100;
   const likes_percent = (likes / (dislikes + likes)) * 100;
@@ -43,10 +71,6 @@ export function Film({
     },
   });
 
-  function toggleIsLiked() {
-    setIsLiked(!isLiked);
-  }
-
   function deleteMovie() {
     mutation.mutate(id);
   }
@@ -63,18 +87,18 @@ export function Film({
             <ThumbsUp
               className="hover:cursor-pointer"
               aria-label="Like icon"
-              onClick={() => toggleIsLiked()}
+              onClick={() => dispatch({ type: "like" })}
               strokeWidth={"1"}
-              fill={isLiked ? "#000" : "transparent"}
+              fill={state.like ? "#000" : "transparent"}
             />
           </button>
           <button>
             <ThumbsDown
               className="hover:cursor-pointer"
               aria-label="Dislike icon"
-              onClick={() => toggleIsLiked()}
+              onClick={() => dispatch({ type: "dislike" })}
               strokeWidth={"1"}
-              fill={!isLiked ? undefined : "transparent"}
+              fill={state.dislike ? "#000" : "transparent"}
             />
           </button>
         </div>
