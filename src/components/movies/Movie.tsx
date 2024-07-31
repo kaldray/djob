@@ -116,7 +116,7 @@ export function Film({
         </div>
         <div className="flex justify-end">
           <button>
-            <Trash2 className="hover:cursor-pointer" size={20} onClick={() => deleteMovie()} />
+            <Trash2 aria-label="Trash icon" className="hover:cursor-pointer" size={20} onClick={() => deleteMovie()} />
           </button>
         </div>
       </div>
