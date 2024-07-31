@@ -4,10 +4,12 @@ type SearchProps = {
   page: number;
   itemsPerPage: number;
   setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export function Search({ page, itemsPerPage, setItemsPerPage }: SearchProps) {
-  const { data } = useMoviesCategories(page, itemsPerPage);
+export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, category }: SearchProps) {
+  const { data } = useMoviesCategories(page, itemsPerPage, category);
 
   return (
     <>
@@ -15,7 +17,12 @@ export function Search({ page, itemsPerPage, setItemsPerPage }: SearchProps) {
         <div className="flex flex-wrap gap-5">
           <div className="flex flex-col gap-3">
             <label htmlFor="category-select">Filtrer par catégorie</label>
-            <select className="rounded-lg border-gray-300 text-sm text-gray-900" id="category-select" name="category">
+            <select
+              defaultValue={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="rounded-lg border-gray-300 text-sm text-gray-900"
+              id="category-select"
+              name="category">
               <option value="all">Choisir une catégorie</option>
               {data &&
                 data.map((d) => (

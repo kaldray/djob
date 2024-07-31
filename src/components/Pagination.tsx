@@ -1,14 +1,15 @@
 import { useMovies } from "#src/features/movies/queries";
-import type { PropsWithChildren } from "react";
 
 type PaginationProps = {
   page: number;
   itemsPerPage: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-} & PropsWithChildren;
+  category: string;
+};
 
-export function Pagination({ page, itemsPerPage, setPage }: PaginationProps) {
-  const { data } = useMovies(page, itemsPerPage);
+export function Pagination({ page, itemsPerPage, setPage, category }: PaginationProps) {
+  const { data } = useMovies(page, itemsPerPage, category);
+
   return (
     <>
       <button

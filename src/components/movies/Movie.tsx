@@ -13,6 +13,12 @@ type Action = {
   type: "like" | "dislike";
 };
 
+type FilmProps = Movie & {
+  page: number;
+  itemsPerPage: number;
+  selectCategory: string;
+};
+
 function reducer(state: State, action: Action) {
   if (action.type === "like") {
     return {
@@ -29,18 +35,7 @@ function reducer(state: State, action: Action) {
   throw Error("Unknown action.");
 }
 
-export function Film({
-  category,
-  dislikes,
-  likes,
-  title,
-  id,
-  page,
-  itemsPerPage,
-}: Movie & {
-  page: number;
-  itemsPerPage: number;
-}) {
+export function Film({ category, dislikes, likes, title, id, page, itemsPerPage, selectCategory }: FilmProps) {
   const [state, dispatch] = React.useReducer(reducer, {
     like: false,
     dislike: false,
@@ -51,19 +46,19 @@ export function Film({
 
   const mutation = useMutation({
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: moviesOptions(page, itemsPerPage).queryKey });
-      const previous = queryClient.getQueryData(moviesOptions(page, itemsPerPage).queryKey);
+      await queryClient.cancelQueries({ queryKey: moviesOptions(page, itemsPerPage, selectCategory).queryKey });
+      const previous = queryClient.getQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey);
       if (previous === undefined) {
         throw new Error("Cache is empty");
       }
-      const newTodo = previous.paginatedData.filter((d) => d.id !== data);
-      queryClient.setQueryData(moviesOptions(page, itemsPerPage).queryKey, {
+      const newData = previous.paginatedData.filter((d) => d.id !== data);
+      queryClient.setQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey, {
         ...previous,
-        paginatedData: newTodo,
+        paginatedData: newData,
       });
     },
     mutationFn: async (id: string) => {
-      const res = queryClient.getQueryData(moviesOptions(page, itemsPerPage).queryKey);
+      const res = queryClient.getQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey);
       if (res === undefined) {
         throw new Error("Cache is empty");
       }
