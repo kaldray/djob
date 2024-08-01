@@ -74,8 +74,8 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
     <>
       <div className="shadow-neoB min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 md:basis-[49%]">
         <div className="flex flex-row items-center justify-between gap-5">
-          <h2 className="text-bold text-xl">{title}</h2>
-          <span className="text-sm">{category}</span>
+          <h2 className="text-bold font-archivo text-xl tracking-wider">{title}</h2>
+          <span className="font-archivo text-sm">{category}</span>
         </div>
         <div className="my-3 flex items-center justify-center gap-3">
           <button>

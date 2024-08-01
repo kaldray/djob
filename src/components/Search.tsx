@@ -14,13 +14,15 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
   return (
     <>
       <form id="filters">
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-wrap justify-center gap-11">
           <div className="flex flex-col gap-3">
-            <label htmlFor="category-select">Filtrer par catégorie</label>
+            <label className="font-archivo" htmlFor="category-select">
+              Filtrer par catégorie
+            </label>
             <select
               defaultValue={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="rounded-lg border-gray-300 text-sm text-gray-900"
+              className="shadow-neoB font-archivo rounded-lg border-2 border-black bg-[#3300FF] p-3 text-sm text-white"
               id="category-select"
               name="category">
               <option value="all">Choisir une catégorie</option>
@@ -33,11 +35,13 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
             </select>
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="limit-select">Nombre de film par page</label>
+            <label className="font-archivo" htmlFor="limit-select">
+              Nombre de film par page
+            </label>
             <select
               defaultValue={itemsPerPage}
               onChange={(e) => setItemsPerPage(Number(e.target.value))}
-              className="rounded-lg border-gray-300 text-sm text-gray-900"
+              className="shadow-neoB font-archivo rounded-lg border-2 border-black bg-[#3300FF] p-3 text-sm text-white"
               id="limit-select"
               name="limit">
               <option value={4}>4</option>
