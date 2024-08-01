@@ -72,7 +72,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
 
   return (
     <>
-      <div className="flex-shrink flex-grow-0 basis-[330px] bg-blue-300 p-3">
+      <div className="shadow-neoB min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 md:basis-[49%]">
         <div className="flex flex-row items-center justify-between gap-5">
           <h2 className="text-bold text-xl">{title}</h2>
           <span className="text-sm">{category}</span>
@@ -80,7 +80,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
         <div className="my-3 flex items-center justify-center gap-3">
           <button>
             <ThumbsUp
-              className="hover:cursor-pointer"
+              className="transition-fill duration-500 hover:cursor-pointer active:scale-90"
               aria-label="Like icon"
               onClick={() => dispatch({ type: "like" })}
               strokeWidth={"1"}
@@ -89,7 +89,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
           </button>
           <button>
             <ThumbsDown
-              className="hover:cursor-pointer"
+              className="transition-fill duration-500 hover:cursor-pointer active:scale-90"
               aria-label="Dislike icon"
               onClick={() => dispatch({ type: "dislike" })}
               strokeWidth={"1"}
@@ -111,7 +111,12 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
         </div>
         <div className="flex justify-end">
           <button>
-            <Trash2 aria-label="Trash icon" className="hover:cursor-pointer" size={20} onClick={() => deleteMovie()} />
+            <Trash2
+              aria-label="Trash icon"
+              className="duration-100 hover:scale-110 hover:cursor-pointer active:scale-90"
+              size={20}
+              onClick={() => deleteMovie()}
+            />
           </button>
         </div>
       </div>

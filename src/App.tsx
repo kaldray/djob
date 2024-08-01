@@ -12,8 +12,8 @@ function App() {
     <>
       <Navbar />
       <main>
-        <section className="mx-auto w-4/5">
-          <div className="mt-5">
+        <section className="mx-auto mt-5 min-h-screen w-4/5">
+          <div>
             <Search
               page={page}
               itemsPerPage={itemsPerPage}
@@ -22,7 +22,7 @@ function App() {
               setItemsPerPage={setItemsPerPage}
             />
           </div>
-          <div className="mt-5 flex w-full flex-wrap gap-4">
+          <div className="mt-5 flex w-full flex-wrap justify-center gap-4">
             <MovieList page={page} itemsPerPage={itemsPerPage} category={category} />
           </div>
           <div className="mt-10 flex flex-row items-center justify-center gap-5">
