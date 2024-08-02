@@ -1,4 +1,4 @@
-import { useQuery, keepPreviousData, queryOptions } from "@tanstack/react-query";
+import { useSuspenseQuery, keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { movies$, type Movies } from "#src/data";
 
 type QueryFnReturnType = {
@@ -11,7 +11,6 @@ export const moviesOptions = (page: number, itemsPerPage: number, category: Arra
     queryKey: ["movies", page, itemsPerPage, ...category],
     queryFn: async () => {
       const response = await movies$;
-      console.log(category);
       const filteredMovies = category.includes("all")
         ? response
         : response.filter((movie) => category.includes(movie.category));
@@ -30,9 +29,8 @@ const useMoviesQuery = <T = QueryFnReturnType>(
   category: Array<string>,
   select?: (data: QueryFnReturnType) => T,
 ) =>
-  useQuery({
+  useSuspenseQuery({
     ...moviesOptions(page, itemsPerPage, category),
-    placeholderData: keepPreviousData,
     select,
   });
 

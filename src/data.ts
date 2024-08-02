@@ -71,7 +71,7 @@ const movies = [
   },
 ];
 
-export const movies$: Promise<typeof movies> = new Promise((resolve, reject) => setTimeout(resolve, 100, movies));
+export const movies$: Promise<typeof movies> = new Promise((resolve, reject) => setTimeout(resolve, 3000, movies));
 
 export type Movies = typeof movies;
 export type Movie = (typeof movies)[number];
