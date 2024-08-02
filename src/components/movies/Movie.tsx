@@ -40,6 +40,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
     like: false,
     dislike: false,
   });
+  const [wiggle, setWiggle] = React.useState<keyof State | null>(null);
   const queryClient = useQueryClient();
   const dislikes_percent = (dislikes / (dislikes + likes)) * 100;
   const likes_percent = (likes / (dislikes + likes)) * 100;
@@ -78,22 +79,38 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
           <span className="font-archivo text-sm">{category}</span>
         </div>
         <div className="my-3 flex items-center justify-center gap-3">
-          <button>
+          <button
+            aria-label="Like icon"
+            aria-pressed={state.like}
+            onClick={() => {
+              dispatch({ type: "like" });
+              setWiggle("like");
+            }}
+            role="button">
             <ThumbsUp
-              className="transition-fill duration-500 hover:cursor-pointer active:scale-90"
-              aria-label="Like icon"
-              onClick={() => dispatch({ type: "like" })}
-              strokeWidth={"1"}
+              aria-hidden="true"
+              className={`transition-fill data-[wiggle=like]:[&:not(:active)]:animate-wiggle duration-500 hover:cursor-pointer active:scale-90`}
+              data-wiggle={wiggle}
               fill={state.like ? "#000" : "transparent"}
+              focusable={false}
+              strokeWidth={"1"}
             />
           </button>
-          <button>
+          <button
+            aria-label="Dislike icon"
+            aria-pressed={state.dislike}
+            onClick={() => {
+              dispatch({ type: "dislike" });
+              setWiggle("dislike");
+            }}
+            role="button">
             <ThumbsDown
-              className="transition-fill duration-500 hover:cursor-pointer active:scale-90"
-              aria-label="Dislike icon"
-              onClick={() => dispatch({ type: "dislike" })}
+              aria-hidden="true"
+              className={`transition-fill data-[wiggle=dislike]:[&:not(:active)]:animate-wiggle duration-500 hover:cursor-pointer active:scale-90`}
+              data-wiggle={wiggle}
               strokeWidth={"1"}
               fill={state.dislike ? "#000" : "transparent"}
+              focusable={false}
             />
           </button>
         </div>
@@ -110,12 +127,12 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
             className={`inline-block h-1 w-[var(--likes)] bg-green-700`}></span>
         </div>
         <div className="flex justify-end">
-          <button>
+          <button role="button" aria-label="Trash icon" onClick={() => deleteMovie()}>
             <Trash2
-              aria-label="Trash icon"
+              aria-hidden="true"
+              focusable="false"
               className="duration-100 hover:scale-110 hover:cursor-pointer active:scale-90"
               size={20}
-              onClick={() => deleteMovie()}
             />
           </button>
         </div>

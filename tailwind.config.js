@@ -11,6 +11,12 @@ export default {
         neoB: "4px 6px 0 #000",
         "neoB-hover": "6px 8px 0 #000",
       },
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-15deg)" },
+          "50%": { transform: "rotate(15deg)" },
+        },
+      },
       transitionProperty: {
         fill: "fill",
       },
@@ -19,6 +25,7 @@ export default {
       },
       animation: {
         "bounce-slow": "bounce 1s 1",
+        wiggle: "wiggle 0.3s 1",
       },
     },
   },
