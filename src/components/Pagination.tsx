@@ -4,11 +4,11 @@ type PaginationProps = {
   page: number;
   itemsPerPage: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  category: string;
+  category: Set<string>;
 };
 
 export function Pagination({ page, itemsPerPage, setPage, category }: PaginationProps) {
-  const { data } = useMovies(page, itemsPerPage, category);
+  const { data } = useMovies(page, itemsPerPage, [...category]);
 
   return (
     <>

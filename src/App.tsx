@@ -7,7 +7,8 @@ import { Search } from "./components/Search";
 function App() {
   const [page, setPage] = React.useState(1);
   const [itemsPerPage, setItemsPerPage] = React.useState(4);
-  const [category, setCategory] = React.useState("all");
+  const [category, setCategory] = React.useState(new Set(["all"]));
+
   return (
     <>
       <Navbar />
@@ -22,7 +23,7 @@ function App() {
               setItemsPerPage={setItemsPerPage}
             />
           </div>
-          <div className="mt-5 flex w-full flex-wrap justify-center gap-4">
+          <div className="mt-10 flex w-full flex-wrap justify-center gap-4">
             <MovieList page={page} itemsPerPage={itemsPerPage} category={category} />
           </div>
           <div className="mt-10 flex flex-row items-center justify-center gap-5">

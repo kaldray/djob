@@ -16,7 +16,7 @@ type Action = {
 type FilmProps = Movie & {
   page: number;
   itemsPerPage: number;
-  selectCategory: string;
+  selectCategory: Set<string>;
 };
 
 function reducer(state: State, action: Action) {
@@ -47,19 +47,19 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
 
   const mutation = useMutation({
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: moviesOptions(page, itemsPerPage, selectCategory).queryKey });
-      const previous = queryClient.getQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey);
+      await queryClient.cancelQueries({ queryKey: moviesOptions(page, itemsPerPage, [...selectCategory]).queryKey });
+      const previous = queryClient.getQueryData(moviesOptions(page, itemsPerPage, [...selectCategory]).queryKey);
       if (previous === undefined) {
         throw new Error("Cache is empty");
       }
       const newData = previous.paginatedData.filter((d) => d.id !== data);
-      queryClient.setQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey, {
+      queryClient.setQueryData(moviesOptions(page, itemsPerPage, [...selectCategory]).queryKey, {
         ...previous,
         paginatedData: newData,
       });
     },
     mutationFn: async (id: string) => {
-      const res = queryClient.getQueryData(moviesOptions(page, itemsPerPage, selectCategory).queryKey);
+      const res = queryClient.getQueryData(moviesOptions(page, itemsPerPage, [...selectCategory]).queryKey);
       if (res === undefined) {
         throw new Error("Cache is empty");
       }

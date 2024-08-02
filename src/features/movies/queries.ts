@@ -6,13 +6,15 @@ type QueryFnReturnType = {
   isLastPage: boolean;
 };
 
-export const moviesOptions = (page: number, itemsPerPage: number, category: string) => {
+export const moviesOptions = (page: number, itemsPerPage: number, category: Array<string>) => {
   return queryOptions({
-    queryKey: ["movies", page, itemsPerPage, category],
+    queryKey: ["movies", page, itemsPerPage, ...category],
     queryFn: async () => {
       const response = await movies$;
-      const filteredMovies =
-        category && category !== "all" ? response.filter((movie) => movie.category === category) : response;
+      console.log(category);
+      const filteredMovies = category.includes("all")
+        ? response
+        : response.filter((movie) => category.includes(movie.category));
       const startIndex = (page - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
       const paginatedData = filteredMovies.slice(startIndex, endIndex);
@@ -25,7 +27,7 @@ export const moviesOptions = (page: number, itemsPerPage: number, category: stri
 const useMoviesQuery = <T = QueryFnReturnType>(
   page: number,
   itemsPerPage: number,
-  category: string,
+  category: Array<string>,
   select?: (data: QueryFnReturnType) => T,
 ) =>
   useQuery({
@@ -34,10 +36,10 @@ const useMoviesQuery = <T = QueryFnReturnType>(
     select,
   });
 
-export const useMovies = (page: number, itemsPerPage: number, category: string) =>
+export const useMovies = (page: number, itemsPerPage: number, category: Array<string>) =>
   useMoviesQuery(page, itemsPerPage, category, undefined);
 
-export const useMoviesCategories = (page: number, itemsPerPage: number, category: string) =>
+export const useMoviesCategories = (page: number, itemsPerPage: number, category: Array<string>) =>
   useMoviesQuery(page, itemsPerPage, category, (data) => {
     const unique = new Set(getCategoryFromMovies(data.paginatedData));
     return [...unique];
