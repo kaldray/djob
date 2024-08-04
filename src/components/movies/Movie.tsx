@@ -73,7 +73,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
 
   return (
     <>
-      <div className="shadow-neoB min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 md:basis-[49%] xl:flex-grow-0">
+      <div className="min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 shadow-neoB md:basis-[49%] xl:flex-grow-0">
         <div className="flex flex-row items-center justify-between gap-5">
           <h2 className="text-bold font-archivo text-xl tracking-wider">{title}</h2>
           <span className="font-archivo text-sm">{category}</span>
@@ -89,7 +89,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
             role="button">
             <ThumbsUp
               aria-hidden="true"
-              className={`transition-fill data-[wiggle=like]:[&:not(:active)]:animate-wiggle duration-500 hover:cursor-pointer active:scale-90`}
+              className={`transition-fill duration-500 hover:cursor-pointer active:scale-90 data-[wiggle=like]:[&:not(:active)]:animate-wiggle`}
               data-wiggle={wiggle}
               fill={state.like ? "#000" : "transparent"}
               focusable={false}
@@ -106,7 +106,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
             role="button">
             <ThumbsDown
               aria-hidden="true"
-              className={`transition-fill data-[wiggle=dislike]:[&:not(:active)]:animate-wiggle duration-500 hover:cursor-pointer active:scale-90`}
+              className={`transition-fill duration-500 hover:cursor-pointer active:scale-90 data-[wiggle=dislike]:[&:not(:active)]:animate-wiggle`}
               data-wiggle={wiggle}
               strokeWidth={"3"}
               fill={state.dislike ? "#000" : "transparent"}
@@ -119,12 +119,12 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
             style={{
               ["--dislikes" as string]: `${dislikes_percent}px`,
             }}
-            className={`inline-block h-3 w-[var(--dislikes)] rounded-md rounded-r-none border-2 border-r-0 border-black bg-red-700`}></span>
+            className={`inline-block h-3 w-[var(--dislikes)] rounded-md rounded-r-none border-2 border-r-0 border-black bg-[#FF6B6B]`}></span>
           <span
             style={{
               ["--likes" as string]: `${likes_percent}px`,
             }}
-            className={`inline-block h-3 w-[var(--likes)] rounded-md rounded-l-none border-2 border-l-0 border-black bg-green-700`}></span>
+            className={`inline-block h-3 w-[var(--likes)] rounded-md rounded-l-none border-2 border-l-0 border-black bg-[#90EE90]`}></span>
         </div>
         <div className="flex justify-end">
           <button role="button" aria-label="Trash icon" onClick={() => deleteMovie()}>
