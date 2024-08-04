@@ -11,6 +11,7 @@ type SearchProps = {
 
 export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, category }: SearchProps) {
   const [selectedOptions, setSelectedOptions] = React.useState(new Set(["all"]));
+  const startTransition = React.startTransition;
   const { data } = useMoviesCategories(page, itemsPerPage, [...category]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -19,8 +20,10 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
     const limit = form.get("limit") ?? "4";
     const category = form.getAll("category");
     const arrCategory = category.map((v) => v.toString());
-    setItemsPerPage(Number(limit));
-    setCategory(new Set(arrCategory));
+    startTransition(() => {
+      setItemsPerPage(Number(limit));
+      setCategory(new Set(arrCategory));
+    });
   }
 
   function handleSelectedOptions(e: React.ChangeEvent<HTMLSelectElement>) {
