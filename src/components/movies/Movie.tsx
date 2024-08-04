@@ -93,7 +93,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
               data-wiggle={wiggle}
               fill={state.like ? "#000" : "transparent"}
               focusable={false}
-              strokeWidth={"1"}
+              strokeWidth={"3"}
             />
           </button>
           <button
@@ -108,7 +108,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
               aria-hidden="true"
               className={`transition-fill data-[wiggle=dislike]:[&:not(:active)]:animate-wiggle duration-500 hover:cursor-pointer active:scale-90`}
               data-wiggle={wiggle}
-              strokeWidth={"1"}
+              strokeWidth={"3"}
               fill={state.dislike ? "#000" : "transparent"}
               focusable={false}
             />
@@ -119,18 +119,19 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
             style={{
               ["--dislikes" as string]: `${dislikes_percent}px`,
             }}
-            className={`inline-block h-1 w-[var(--dislikes)] bg-red-700`}></span>
+            className={`inline-block h-3 w-[var(--dislikes)] rounded-md rounded-r-none border-2 border-r-0 border-black bg-red-700`}></span>
           <span
             style={{
               ["--likes" as string]: `${likes_percent}px`,
             }}
-            className={`inline-block h-1 w-[var(--likes)] bg-green-700`}></span>
+            className={`inline-block h-3 w-[var(--likes)] rounded-md rounded-l-none border-2 border-l-0 border-black bg-green-700`}></span>
         </div>
         <div className="flex justify-end">
           <button role="button" aria-label="Trash icon" onClick={() => deleteMovie()}>
             <Trash2
               aria-hidden="true"
               focusable="false"
+              strokeWidth={"3"}
               className="duration-100 hover:scale-110 hover:cursor-pointer active:scale-90"
               size={20}
             />
