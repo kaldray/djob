@@ -73,7 +73,7 @@ export function Film({ category, dislikes, likes, title, id, page, itemsPerPage,
 
   return (
     <>
-      <div className="shadow-neoB min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 md:basis-[49%]">
+      <div className="shadow-neoB min-w-[300px] max-w-[600px] flex-shrink flex-grow rounded-md border-2 border-black bg-white p-3 md:basis-[49%] xl:flex-grow-0">
         <div className="flex flex-row items-center justify-between gap-5">
           <h2 className="text-bold font-archivo text-xl tracking-wider">{title}</h2>
           <span className="font-archivo text-sm">{category}</span>

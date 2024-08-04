@@ -54,7 +54,7 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
     <>
       <form id="filters" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-wrap justify-center gap-11">
-          <div className="flex flex-grow basis-full flex-col gap-3 sm:basis-0">
+          <div className="flex flex-grow basis-full flex-col gap-3 sm:basis-0 md:flex-grow-0">
             <label className="font-archivo" htmlFor="category-select">
               Filtrer par catégorie
             </label>
@@ -74,7 +74,7 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
                 ))}
             </select>
           </div>
-          <div className="flex flex-grow basis-full flex-col gap-3 sm:basis-0">
+          <div className="flex flex-grow basis-full flex-col gap-3 sm:basis-auto md:flex-grow-0">
             <label className="font-archivo" htmlFor="limit-select">
               Nombre de film par page
             </label>
@@ -89,7 +89,7 @@ export function Search({ page, itemsPerPage, setItemsPerPage, setCategory, categ
               <option value={12}>12</option>
             </select>
           </div>
-          <div className="flex flex-col justify-center gap-3">
+          <div className="flex basis-full flex-col justify-center gap-3 sm:basis-0">
             <button
               className="shadow-neoB font-archivo rounded-md border-2 border-black bg-[#337aff] p-3 text-center text-white transition-shadow hover:scale-110 active:enabled:scale-90 disabled:cursor-not-allowed disabled:bg-[#ccc] disabled:text-black"
               type="submit">
