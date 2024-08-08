@@ -8,7 +8,11 @@ type MovieListProps = {
 };
 
 export function MovieList({ page, itemsPerPage, category }: MovieListProps) {
-  const { data } = useMovies(page, itemsPerPage, [...category]);
+  const { data, error, isFetching } = useMovies(page, itemsPerPage, [...category]);
+
+  if (error && !isFetching) {
+    throw error;
+  }
 
   return (
     <>
