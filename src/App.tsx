@@ -14,7 +14,7 @@ function App() {
     <>
       <Navbar />
       <main>
-        <section className="mx-auto mt-5 min-h-screen w-4/5">
+        <section className="mx-auto mt-5 min-h-screen w-4/5 max-w-[1600px]">
           <div>
             <React.Suspense fallback={<SearchPlaceholder />}>
               <Search
@@ -26,7 +26,7 @@ function App() {
               />
             </React.Suspense>
           </div>
-          <div className="mt-10 flex w-full flex-wrap justify-center gap-4">
+          <div className="card mt-10 grid w-full content-center justify-center gap-4">
             <React.Suspense fallback={<MoviePlaceholder />}>
               <MovieList page={page} itemsPerPage={itemsPerPage} category={category} />
             </React.Suspense>

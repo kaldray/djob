@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      gridTemplateColumnsColumn: {
+        card: "repeat(auto-fit, minmax(0px, 1fr))",
+      },
       colors: {
         djob: "#110066",
         neoBlue: "#87CEEB",
