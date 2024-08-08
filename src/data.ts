@@ -74,7 +74,7 @@ const movies = [
 type Movies$Promise = Promise<typeof movies>;
 
 export const movies$: Movies$Promise = new Promise((resolve, reject) => {
-  setTimeout(reject, 100, movies);
+  setTimeout(resolve, 100, movies);
 });
 
 export type Movies = typeof movies;
